@@ -2,6 +2,7 @@ function ContentXBlockEditor(runtime, element) {
   $(element).find('.save-button').bind('click', function() {
     var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
     var data = {
+      display_name: $(element).find('input[name=subtopic]').val(),
       subtopic: $(element).find('input[name=subtopic]').val(),
       subtopic_desc: $(element).find('input[name=subtopic_desc]').val(),
       image_url: $(element).find('input[name=image_url]').val(),

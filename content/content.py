@@ -16,6 +16,12 @@ class ContentXBlock(XBlock):
     # self.<fieldname>.
 
     # TO-DO: delete count, and define your own fields.
+    display_name = String(
+        display_name="Display Name",
+        help="Display name of the component",
+        default="Content template",
+        scope=Scope.content)
+
     subtopic = String(
         default="subtopic",
         scope=Scope.content,
@@ -101,7 +107,7 @@ class ContentXBlock(XBlock):
         when viewing courses.
         """
         html = self.resource_string("static/html/content_edit.html")
-        frag = Fragment(html.format(subtopic=self.subtopic,subtopic_desc=self.subtopic_desc,image_url=self.image_url,image_desc=self.image_desc,sim_url=self.sim_url,sim_desc=self.sim_desc,anim_url=self.anim_url,anim_desc=self.anim_desc,vid_url=self.vid_url,vid_desc=self.vid_desc,game_url=self.game_url,game_desc=self.game_desc))
+        frag = Fragment(html.format(display_name=self.display_name,subtopic=self.subtopic,subtopic_desc=self.subtopic_desc,image_url=self.image_url,image_desc=self.image_desc,sim_url=self.sim_url,sim_desc=self.sim_desc,anim_url=self.anim_url,anim_desc=self.anim_desc,vid_url=self.vid_url,vid_desc=self.vid_desc,game_url=self.game_url,game_desc=self.game_desc))
         frag.add_css(self.resource_string("static/css/content.css"))
         js = self.resource_string("static/js/src/content_edit.js")
         frag.add_javascript(js)
@@ -114,6 +120,7 @@ class ContentXBlock(XBlock):
         """
         Called when submitting the form in Studio.
         """
+        self.display_name = data.get('display_name')
         self.subtopic = data.get('subtopic')
         self.subtopic_desc = data.get('subtopic_desc')
         self.image_url = data.get('image_url')
@@ -127,6 +134,14 @@ class ContentXBlock(XBlock):
         self.game_url = data.get('game_url')
         self.game_desc = data.get('game_desc')
         return {'result': 'success'}
+
+
+    @XBlock.json_handler
+    def fieldstojs(self, data, suffix=''):
+        """
+        Used to pass values of fields to content.js
+        """
+        return {'sim_url':self.sim_url,'anim_url':self.anim_url,'vid_url':self.vid_url,'game_url':self.game_url,'result':'success'}
 
 
     # TO-DO: change this to create the scenarios you'd like to see in the

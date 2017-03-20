@@ -18,28 +18,23 @@ function ContentXBlock(runtime, element) {
 	var span3 = document.getElementsByClassName("close")[2];
 	var span4 = document.getElementsByClassName("close")[3];
 
+	var handlerUrl = runtime.handlerUrl(element, 'fieldstojs');
+	var sim_url;
+	var anim_url;
+	var vid_url;
+	var game_url;
+
     $(function ($) {
         /* Here's where you'd do things on page load. */
 		// When the user clicks on the button, open the modal
-		btn1.onclick = function() {
-		    modal1.style.display = "block";
-		    document.getElementById('iframe1').src = "{self.sim_url}";
-		}
+		$.ajax({
+        type: "POST",
+        url: handlerUrl,
+        data: JSON.stringify({"hello": "world"}),
+        success: updatevariable
+        });
 
-		btn2.onclick = function() {
-		    modal2.style.display = "block";
-		    document.getElementById('iframe2').src = "{self.anim_url}";
-		}
-
-		btn3.onclick = function() {
-		    modal3.style.display = "block";
-		    document.getElementById('iframe3').src = "{self.vid_url}";
-		}
-
-		btn4.onclick = function() {
-		    modal4.style.display = "block";
-		    document.getElementById('iframe4').src = "{self.game_url}";
-		}
+		
 
 		// When the user clicks on <span> (x), close the modal
 		span1.onclick = function() {
@@ -83,5 +78,34 @@ function ContentXBlock(runtime, element) {
 
 		}
     });
+
+    function updatevariable(result){
+    	var jsonparsed = result;
+    	sim_url = jsonparsed.sim_url;
+    	anim_url = jsonparsed.anim_url;
+    	vid_url = jsonparsed.vid_url;
+    	game_url = jsonparsed.game_url;
+
+    	btn1.onclick = function() {
+		    modal1.style.display = "block";
+		    document.getElementById('iframe1').src = sim_url;
+		}
+
+		btn2.onclick = function() {
+		    modal2.style.display = "block";
+		    document.getElementById('iframe2').src = anim_url;
+		}
+
+		btn3.onclick = function() {
+		    modal3.style.display = "block";
+		    document.getElementById('iframe3').src = vid_url;
+		}
+
+		btn4.onclick = function() {
+		    modal4.style.display = "block";
+		    document.getElementById('iframe4').src = game_url;
+		}
+
+    }
 }
 
