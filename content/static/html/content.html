@@ -4,9 +4,9 @@
     <p>{self.subtopic_desc}</p>
     <img src="{self.image_url}" id="img1" style="width: 100%;">
     <figcaption style="text-align: center;font-style: italic;">{self.image_desc}</figcaption>
-    <h4 style="color: white;margin-bottom: 0;">ADDITIONAL CONTENTS</h4>
-    <div class="additional-content" style="padding: 0;margin: 0;">
-    <div class="about-us-col inline">
+    <h4 id="additional_header" style="color: white;margin-bottom: 0;">ADDITIONAL CONTENTS</h4>
+    <div id="additional_holder" class="additional-content" style="padding: 0;margin: 0;">
+    <div id="sim_holder" class="about-us-col inline">
     	<div class="col-icon-wrapper">
     		<img src="/static/our-mission-icon.png">
     	</div>
@@ -15,7 +15,7 @@
     		<my-a id="myBtn1" class="btn btn-primary">Launch</my-a>
     		
     </div>
-    <div class="about-us-col inline">
+    <div id="anim_holder" class="about-us-col inline">
     	<div class="col-icon-wrapper">
     		<img src="/static/animation.png">
     	</div>
@@ -23,7 +23,7 @@
     		<p style="justify-content: center;padding: 10px;font-style: italic;">{self.anim_desc}</p>
     		<my-a id="myBtn2" class="btn btn-primary">Launch</my-a>
     </div>
-    <div class="about-us-col inline">
+    <div id="vid_holder" class="about-us-col inline">
     	<div class="col-icon-wrapper">
     		<img src="/static/video.png">
     	</div>
@@ -32,7 +32,7 @@
     		<my-a id="myBtn3" class="btn btn-primary">Launch</my-a>
     		
     </div>
-    <div class="about-us-col inline">
+    <div id="game_holder" class="about-us-col inline">
     	<div class="col-icon-wrapper">
     		<img src="/static/game.png">
     	</div>

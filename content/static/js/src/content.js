@@ -18,6 +18,13 @@ function ContentXBlock(runtime, element) {
 	var span3 = document.getElementsByClassName("close")[2];
 	var span4 = document.getElementsByClassName("close")[3];
 
+	var sim_holder = document.getElementById("sim_holder");
+	var anim_holder = document.getElementById("anim_holder");
+	var vid_holder = document.getElementById("vid_holder");
+	var game_holder = document.getElementById("game_holder");
+	var additional_holder = document.getElementById("additional_holder");
+	var additional_header = document.getElementById("additional_header");
+
 	var handlerUrl = runtime.handlerUrl(element, 'fieldstojs');
 	var sim_url;
 	var anim_url;
@@ -104,6 +111,29 @@ function ContentXBlock(runtime, element) {
 		btn4.onclick = function() {
 		    modal4.style.display = "block";
 		    document.getElementById('iframe4').src = game_url;
+		}
+
+		//Hiding additional content tiles which doesn't have values
+		if (sim_url=="") {
+			sim_holder.style.display="none"
+		}
+
+		if (anim_url=="") {
+			anim_holder.style.display="none"
+		}
+
+		if (vid_url=="") {
+			vid_holder.style.display="none"
+		}
+
+		if (game_url=="") {
+			game_holder.style.display="none"
+		}
+
+		//Completely hide additional content section if there is no additional contents
+		if ((sim_url=="")&&(anim_url=="")&&(vid_url=="")&&(game_url=="")) {
+			additional_holder.style.display="none"
+			additional_header.style.display="none"
 		}
 
     }
