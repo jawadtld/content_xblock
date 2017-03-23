@@ -3,7 +3,7 @@
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fields import Scope, String
+from xblock.fields import Scope, String, Integer
 from xblock.fragment import Fragment
 
 
@@ -33,7 +33,7 @@ class ContentXBlock(XBlock):
         help="Subtopic description")
 
     image_url = String(
-        default="/static/6.jpg",
+        default="http://docs.edx.org/edx-docs/assets/images/logo-edx.png",
         scope=Scope.content,
         help="Enter url for the image, which will be displayed below the subtopic description")
 
@@ -82,6 +82,11 @@ class ContentXBlock(XBlock):
         scope=Scope.content,
         help="Small description about the game")
 
+    page_views = Integer(
+        default=0,
+        scope=Scope.user_state_summary,
+        help="Small description about the game")
+
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -93,6 +98,7 @@ class ContentXBlock(XBlock):
         The primary view of the ContentXBlock, shown to students
         when viewing courses.
         """
+        self.page_views += 1
         html = self.resource_string("static/html/content.html")
         frag = Fragment(html.format(self=self))
         frag.add_css(self.resource_string("static/css/content.css"))
@@ -103,11 +109,10 @@ class ContentXBlock(XBlock):
 
     def studio_view(self, context):
         """
-        The primary view of the ContentXBlock, shown to studio view
-        when viewing courses.
+        The primary view of the ContentXBlock, shown to studio view.
         """
         html = self.resource_string("static/html/content_edit.html")
-        frag = Fragment(html.format(display_name=self.display_name,subtopic=self.subtopic,subtopic_desc=self.subtopic_desc,image_url=self.image_url,image_desc=self.image_desc,sim_url=self.sim_url,sim_desc=self.sim_desc,anim_url=self.anim_url,anim_desc=self.anim_desc,vid_url=self.vid_url,vid_desc=self.vid_desc,game_url=self.game_url,game_desc=self.game_desc))
+        frag = Fragment(html.format(display_name=self.display_name,subtopic=self.subtopic,subtopic_desc=self.subtopic_desc,image_url=self.image_url,image_desc=self.image_desc,sim_url=self.sim_url,sim_desc=self.sim_desc,anim_url=self.anim_url,anim_desc=self.anim_desc,vid_url=self.vid_url,vid_desc=self.vid_desc,game_url=self.game_url,game_desc=self.game_desc,page_views=self.page_views))
         frag.add_css(self.resource_string("static/css/content.css"))
         js = self.resource_string("static/js/src/content_edit.js")
         frag.add_javascript(js)
